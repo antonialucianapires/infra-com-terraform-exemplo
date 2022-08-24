@@ -4,3 +4,12 @@ resource "aws_vpc" "vpc-fc" {
     "Name" = "vpc-fc"
   }
 }
+
+resource "aws_subnet" "fc-subnet-1" {
+  availability_zone = "us-east-1d"
+  vpc_id = aws_vpc.vpc-fc.id
+  cidr_block = "10.0.0.0/24"
+  tags = {
+    "Name" = "fcsubnet-1"
+  }
+}
