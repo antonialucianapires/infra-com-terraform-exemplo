@@ -1,24 +1,19 @@
 resource "aws_vpc" "vpc-fc" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    "Name" = "vpc-fc"
+    "Name" = "vpc-${var.prefix}"
   }
 }
 
-resource "aws_subnet" "fc-subnet-1" {
-  availability_zone = "us-east-1d"
-  vpc_id = aws_vpc.vpc-fc.id
-  cidr_block = "10.0.0.0/24"
-  tags = {
-    "Name" = "fcsubnet-1"
-  }
-}
+data "aws_availability_zones" "available" {}
 
-resource "aws_subnet" "fc-subnet-2" {
-  availability_zone = "us-east-1a"
+resource "aws_subnet" "subnets" {
+  count = 2
+  availability_zone = data.aws_availability_zones.available.names[count.index]
   vpc_id = aws_vpc.vpc-fc.id
-  cidr_block = "10.0.1.0/24"
+  cidr_block = "10.0.${count.index}.0/24"
+  map_public_ip_on_launch = true
   tags = {
-    "Name" = "fcsubnet-2"
+    "Name" = "${var.prefix}-subnet-${count.index}"
   }
 }
