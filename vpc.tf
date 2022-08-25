@@ -37,3 +37,9 @@ resource "aws_route_table" "fc-rt" {
     Name = "${var.prefix}-rt"
   }
 }
+
+resource "aws_route_table_association" "fc-rt-association" {
+  count = 2
+  route_table_id = aws_route_table.fc-rt.id
+  subnet_id = aws_subnet.subnets.*.id[count.index]
+}
