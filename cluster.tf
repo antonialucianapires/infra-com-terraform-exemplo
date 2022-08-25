@@ -29,3 +29,13 @@ resource "aws_iam_role" "role-cluster-fc" {
     }
   POLICY
 }
+
+resource "aws_iam_role_policy_attachment" "cluster-eksVpcResourceController" {
+  role = aws_iam_role.role-cluster-fc.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+}
+
+resource "aws_iam_role_policy_attachment" "cluster-eksClusterPolicy" {
+  role = aws_iam_role.role-cluster-fc.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+}
