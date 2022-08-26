@@ -9,3 +9,7 @@ variable "cluster_name" {
 variable "retention_days" {
   description = "total de dias de retenção de logs"
 }
+
+variable "desired_size" {}
+variable "max_size" {}
+variable "min_size" {}
